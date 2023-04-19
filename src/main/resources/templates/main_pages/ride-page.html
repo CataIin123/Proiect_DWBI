@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Rides</title>
+    <link th:href="@{/css/style.css}" href="/css/style.css"
+          rel="stylesheet" type="text/css" media="screen"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="wrapper" >
+    <div th:insert="fragments/sidebar :: sidebar"></div>
+    <div class="main_content">
+        <div class="additional-buttons">
+            <div th:insert="fragments/header :: header_ride"></div>
+        </div>
+        <div>
+            <table class="table table-striped">
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+                      rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+                      crossorigin="anonymous">
+                <thead>
+                <tr>
+                    <th><a th:href="@{'/rides/'+ ${currentPage} + '/rideId?sortDir=' + ${reverseSortDir}}"/>Ride Id</th>
+                    <th><a th:href="@{'/rides/'+ ${currentPage} + '/client?sortDir=' + ${reverseSortDir}}"/>Client</th>
+                    <th><a th:href="@{'/rides/'+ ${currentPage} + '/car?sortDir=' + ${reverseSortDir}}"/>Car</th>
+                    <th><a th:href="@{'/rides/'+ ${currentPage} + '/route?sortDir=' + ${reverseSortDir}}"/>Route</th>
+                    <th><a th:href="@{'/rides/'+ ${currentPage} + '/rideDate?sortDir=' + ${reverseSortDir}}"/>Date</th>
+                    <th><a th:href="@{'/rides/'+ ${currentPage} + '/status?sortDir=' + ${reverseSortDir}}"/>Status</th>
+                    <th><a th:href="@{'/rides/'+ ${currentPage} + '/tarif?sortDir=' + ${reverseSortDir}}"/>Tarif</th>
+                </tr>
+                </thead>
+                <tr th:each="ride : ${rides}">
+                    <td th:text="${ride.getRideId()}"></td>
+                    <td th:text="${ride.getClient()}"></td>
+                    <td th:text="${ride.getCar()}"></td>
+                    <td th:text="${ride.getRoute()}"></td>
+                    <td th:text="${ride.getRideDate()}"></td>
+                    <td th:text="${ride.getStatus()}"></td>
+                    <td th:text="${ride.getTarif()}"></td>
+                    <td><a href="#" th:href="@{'/rides/update/' + ${ride.getRideId()}}">Update</a></td>
+                    <td><a href="#" th:href="@{'/rides/delete/' + ${ride.getRideId()}}">Delete</a></td>
+                </tr>
+            </table>
+        </div>
+        <footer style="font-size: large" class="panel-footer">
+            <nav>
+                Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a  th:if="${currentPage > 1}" th:href="@{'/rides/1'}">First</a>
+                        <span th:unless="${currentPage > 1}">First</span>
+                    </li>
+                    &nbsp;
+                    <li class="page-item">
+                        <a th:if="${currentPage > 1}" th:href="@{'/rides/' + ${currentPage - 1}}">Previous</a>
+                        <span th:unless="${currentPage > 1}">Previous</span>
+                    </li>
+                    &nbsp;
+                    <li class="page-item">
+                        <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                            <a th:href="@{'/rides/' + ${i}}">[[${i}]]</a>
+                        </span>
+                    </li>
+                    &nbsp;
+                    <li class="page-item">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/rides/' + ${currentPage + 1}}">Next</a>
+                        <span th:unless="${currentPage < totalPages}">Next</span>
+                    </li>
+                    &nbsp;
+                    <li class="page-item">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/rides/' + ${totalPages}}">Last</a>
+                        <span th:unless="${currentPage < totalPages}">Last</span>
+                    </li>
+                </ul>
+            </nav>
+
+        </footer>
+    </div>
+
+</div>
+</body>
+</html>

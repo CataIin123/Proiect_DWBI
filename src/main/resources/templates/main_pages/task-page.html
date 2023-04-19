@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Tasks</title>
+    <link th:href="@{/css/style.css}" href="/css/style.css"
+          rel="stylesheet" type="text/css" media="screen"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="wrapper" >
+    <div th:insert="fragments/sidebar :: sidebar"></div>
+    <div class="main_content">
+        <div class="additional-buttons">
+            <div th:insert="fragments/header :: header_task"></div>
+        </div>
+        <div>
+            <table class="table table-striped">
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+                      rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+                      crossorigin="anonymous">
+                <thead>
+                <tr>
+                    <th><a th:href="@{'/tasks/'+ ${currentPage} + '/taskId?sortDir=' + ${reverseSortDir}}"/>Task Id</th>
+                    <th><a th:href="@{'/tasks/'+ ${currentPage} + '/driver?sortDir=' + ${reverseSortDir}}"/>Driver</th>
+                    <th><a th:href="@{'/tasks/'+ ${currentPage} + '/car?sortDir=' + ${reverseSortDir}}"/>Car</th>
+                    <th><a th:href="@{'/tasks/'+ ${currentPage} + '/startDate?sortDir=' + ${reverseSortDir}}"/>Start Date</th>
+                    <th><a th:href="@{'/tasks/'+ ${currentPage} + '/finishDate?sortDir=' + ${reverseSortDir}}"/>Finish Date</th>
+                </tr>
+                </thead>
+                <tr th:each="task : ${tasks}">
+                    <td th:text="${task.getTaskId()}"></td>
+                    <td th:text="${task.getDriver().getCnp()}"></td>
+                    <td th:text="${task.getCar().getCarNumber()}"></td>
+                    <td th:text="${task.getStartDate()}"></td>
+                    <td th:text="${task.getFinishDate()}"></td>
+
+                    <td><a href="#" th:href="@{'/tasks/update/' + ${task.getTaskId()}}">Update</a></td>
+                    <td><a href="#" th:href="@{'/tasks/delete/' + ${task.getTaskId()}}">Delete</a></td>
+                </tr>
+            </table>
+        </div>
+        <footer style="font-size: large" class="panel-footer">
+            <nav>
+                Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a  th:if="${currentPage > 1}" th:href="@{'/tasks/1'}">First</a>
+                        <span th:unless="${currentPage > 1}">First</span>
+                    </li>
+                    &nbsp;
+                    <li class="page-item">
+                        <a th:if="${currentPage > 1}" th:href="@{'/tasks/' + ${currentPage - 1}}">Previous</a>
+                        <span th:unless="${currentPage > 1}">Previous</span>
+                    </li>
+                    &nbsp;
+                    <li class="page-item">
+                        <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                            <a th:href="@{'/tasks/' + ${i}}">[[${i}]]</a>
+                        </span>
+                    </li>
+                    &nbsp;
+                    <li class="page-item">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/tasks/' + ${currentPage + 1}}">Next</a>
+                        <span th:unless="${currentPage < totalPages}">Next</span>
+                    </li>
+                    &nbsp;
+                    <li class="page-item">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/tasks/' + ${totalPages}}">Last</a>
+                        <span th:unless="${currentPage < totalPages}">Last</span>
+                    </li>
+                </ul>
+            </nav>
+
+        </footer>
+    </div>
+
+</div>
+</body>
+</html>
