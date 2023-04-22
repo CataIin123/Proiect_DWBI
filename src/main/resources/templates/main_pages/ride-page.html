@@ -34,9 +34,9 @@
                 </thead>
                 <tr th:each="ride : ${rides}">
                     <td th:text="${ride.getRideId()}"></td>
-                    <td th:text="${ride.getClient()}"></td>
-                    <td th:text="${ride.getCar()}"></td>
-                    <td th:text="${ride.getRoute()}"></td>
+                    <td th:text="${ride.getClient().getClientName()}"></td>
+                    <td th:text="${ride.getCar().getCarNumber()}"></td>
+                    <td th:text="${ride.getRoute().getRouteId()}"></td>
                     <td th:text="${ride.getRideDate()}"></td>
                     <td th:text="${ride.getStatus()}"></td>
                     <td th:text="${ride.getTarif()}"></td>
