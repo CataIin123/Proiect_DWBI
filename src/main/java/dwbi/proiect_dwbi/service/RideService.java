@@ -66,7 +66,7 @@ public class RideService {
             Client storedClient = clientService.findByClientId(client);
             Car storedCar = carService.findByCarId(car);
             Route storedRoute = routeService.findByRouteId(route);
-            if (storedClient != null || storedCar != null || storedRoute != null) {
+            if (storedClient == null || storedCar == null || storedRoute == null) {
                 throw new ResourceAlreadyExistsException("Resource not found");
             }
             if (storedRide != null && storedRide.getRideId() != rideId) {
