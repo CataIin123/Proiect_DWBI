@@ -73,11 +73,6 @@ public class RideGlue extends SetupGlue {
         Assert.fail("The resource cannot be found");
     }
 
-    @Then("I should see the update {string} page")
-    public void iSouldSeeTheUpdatePage(String string) {
-        Assert.assertTrue(getDriver().getCurrentUrl().startsWith("http://localhost:8081/" + string + "s/update/"));
-    }
-
     @When("I input the updated ride data")
     public void iInputTheUpdatedRideData() {
         WebElement clientField = getDriver().findElement(By.name("client"));
@@ -95,14 +90,5 @@ public class RideGlue extends SetupGlue {
         tarifField.sendKeys("0");
     }
 
-    @When("I click on the delete button for the first element")
-    public void iClickOnTheDeleteButtonForTheFirstElement() {
-        WebElement navElement = getDriver().findElement(By.className("panel-footer")).findElement(By.tagName("nav"));
-        String navText = navElement.getText();
-        elementCounter = new Scanner(navText).useDelimiter("\\D+").nextInt();
-        WebElement baseTable = getDriver().findElement(By.tagName("table"));
-        List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
-        WebElement deleteButton = rows.get(1).findElement(By.linkText("Delete"));
-        deleteButton.click();
-    }
+
 }
