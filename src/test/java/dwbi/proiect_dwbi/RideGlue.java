@@ -12,7 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.*;
 
 public class RideGlue extends SetupGlue {
-    static int elementCounter = 0;
 
     @When("I input the ride data")
     public void iInputTheRideData() {
@@ -30,7 +29,6 @@ public class RideGlue extends SetupGlue {
         statusField.sendKeys("test");
         tarifField.sendKeys("0");
     }
-
 
     @And("I should see the new ride on the ride page")
     public void iShouldSeeTheNewRideOnTheRidePage() {
@@ -89,6 +87,4 @@ public class RideGlue extends SetupGlue {
         statusField.sendKeys("updated ride33");
         tarifField.sendKeys("0");
     }
-
-
 }

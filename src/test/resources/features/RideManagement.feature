@@ -5,7 +5,7 @@ Feature: Ride Management
     Given I am on the "ride" page
     Then I should see a list with all the "rides"
 
-  Scenario: I open the Ride create page
+  Scenario: I open the ride create page
     Given I am on the "ride" page
     When I click on the "ride" create button
     Then I should see the "ride" create page
@@ -17,7 +17,7 @@ Feature: Ride Management
     Then I should see a list with all the "rides"
     And I should see the new ride on the ride page
 
-  Scenario: I open the Ride update page
+  Scenario: I open the ride update page
     Given I am on the "ride" page
     When I click on the update button for the first element
     Then I should see the update "ride" page
