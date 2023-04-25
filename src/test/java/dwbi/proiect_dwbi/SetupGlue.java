@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
-public class Hook {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Hook.class);
+public class SetupGlue {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SetupGlue.class);
 
     public WebDriver webDriver;
 
