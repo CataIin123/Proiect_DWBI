@@ -12,7 +12,6 @@ public class SetupGlue {
 
     public WebDriver webDriver;
 
-
     public WebDriver getDriver() {
         if (isEmpty(webDriver)) {
             initializeDriver();

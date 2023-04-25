@@ -1,6 +1,5 @@
 package dwbi.proiect_dwbi;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -44,7 +43,6 @@ public class SharedGlue extends SetupGlue{
         Assert.assertEquals(windowTitle, correctWindowTitle);
     }
 
-
     @When("I click on the {string} create button")
     public void iClickOnTheCreateButton(String string) {
         WebElement createButton = getDriver().findElement(By.className("create-" + string + "-button"));
@@ -85,16 +83,19 @@ public class SharedGlue extends SetupGlue{
         WebElement baseTable = getDriver().findElement(By.tagName("table"));
         List<WebElement> rows = baseTable.findElements(By.tagName("td"));
         Assert.assertFalse(rows.isEmpty());
+        closeDriver();
     }
 
     @Then("I should see the {string} create page")
     public void iShouldSeeTheCreatePage(String string) {
         Assert.assertEquals(getDriver().getCurrentUrl(), "http://localhost:8081/" + string + "s/create?");
+        closeDriver();
     }
 
     @Then("I should see the update {string} page")
     public void iSouldSeeTheUpdatePage(String string) {
         Assert.assertTrue(getDriver().getCurrentUrl().startsWith("http://localhost:8081/" + string + "s/update/"));
+        closeDriver();
     }
 
     @Then("The {string} list should contain one less element")
@@ -103,5 +104,6 @@ public class SharedGlue extends SetupGlue{
         String navText = navElement.getText();
         int newElementCounter = new Scanner(navText).useDelimiter("\\D+").nextInt();
         Assert.assertEquals(newElementCounter, elementCounter - 1);
+        closeDriver();
     }
 }
