@@ -5,18 +5,29 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 
-public class RideGlue extends SetupGlue {
+public class RideGlue{
+
+    private Hook hook;
+
+    public RideGlue() {
+    }
+
+    public RideGlue(Hook hook) {
+        this.hook = hook;
+    }
 
     @When("I input the ride data")
     public void iInputTheRideData() {
-        WebElement clientField = getDriver().findElement(By.name("client"));
-        WebElement carField = getDriver().findElement(By.name("car"));
-        WebElement routeField = getDriver().findElement(By.name("route"));
-        WebElement rideDateField = getDriver().findElement(By.name("rideDate"));
-        WebElement statusField = getDriver().findElement(By.name("status"));
-        WebElement tarifField = getDriver().findElement(By.name("tarif"));
+        WebElement clientField = hook.getDriver().findElement(By.name("client"));
+        WebElement carField = hook.getDriver().findElement(By.name("car"));
+        WebElement routeField = hook.getDriver().findElement(By.name("route"));
+        WebElement rideDateField = hook.getDriver().findElement(By.name("rideDate"));
+        WebElement statusField = hook.getDriver().findElement(By.name("status"));
+        WebElement tarifField = hook.getDriver().findElement(By.name("tarif"));
 
         clientField.sendKeys("1");
         carField.sendKeys("1");
@@ -36,7 +47,8 @@ public class RideGlue extends SetupGlue {
         expectedElements.add("test");
         expectedElements.add("0.0");
         while (true) {
-            WebElement baseTable = getDriver().findElement(By.tagName("table"));
+            //maybe add wait for table tag
+            WebElement baseTable = hook.getDriver().findElement(By.tagName("table"));
             List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
             for (int i = 0; i < rows.size(); i++) {
                 try {
@@ -54,7 +66,7 @@ public class RideGlue extends SetupGlue {
                 }
             }
             try {
-                WebElement nextPageElement = getDriver().findElement(By.linkText("Next"));
+                WebElement nextPageElement = hook.getDriver().findElement(By.linkText("Next"));
                 if (nextPageElement.isEnabled()) {
                     nextPageElement.click();
                 } else {
@@ -69,12 +81,12 @@ public class RideGlue extends SetupGlue {
 
     @When("I input the updated ride data")
     public void iInputTheUpdatedRideData() {
-        WebElement clientField = getDriver().findElement(By.name("client"));
-        WebElement carField = getDriver().findElement(By.name("car"));
-        WebElement routeField = getDriver().findElement(By.name("route"));
-        WebElement rideDateField = getDriver().findElement(By.name("rideDate"));
-        WebElement statusField = getDriver().findElement(By.name("status"));
-        WebElement tarifField = getDriver().findElement(By.name("tarif"));
+        WebElement clientField = hook.getDriver().findElement(By.name("client"));
+        WebElement carField = hook.getDriver().findElement(By.name("car"));
+        WebElement routeField = hook.getDriver().findElement(By.name("route"));
+        WebElement rideDateField = hook.getDriver().findElement(By.name("rideDate"));
+        WebElement statusField = hook.getDriver().findElement(By.name("status"));
+        WebElement tarifField = hook.getDriver().findElement(By.name("tarif"));
 
         clientField.sendKeys("1");
         carField.sendKeys("1");

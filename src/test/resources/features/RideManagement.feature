@@ -1,6 +1,4 @@
-@ci
 Feature: Ride Management
-
   Scenario: View the list of all rides
     Given I am on the "ride" page
     Then I should see a list with all the "rides"

@@ -1,14 +1,16 @@
 package dwbi.proiect_dwbi;
 
+import io.cucumber.java.After;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
-public class SetupGlue {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SetupGlue.class);
+public class Hook {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Hook.class);
 
     public WebDriver webDriver;
 
@@ -36,5 +38,10 @@ public class SetupGlue {
         }
         webDriver.quit();
         webDriver = null;
+    }
+
+    @After
+    public void closeBrowserAfterScenario(){
+        webDriver.close();
     }
 }
