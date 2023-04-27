@@ -24,7 +24,7 @@ Feature: Ride Management
     Given I am on the "ride" update page
     When I input the updated ride data
     And I click on the save button
-    And I should see the new ride on the ride page
+    And I should see the updated ride on the ride page
 
   Scenario: I delete a ride
     Given I am on the "ride" page

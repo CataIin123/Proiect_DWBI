@@ -14,6 +14,8 @@ import java.util.*;
 public class SharedGlue{
     private  Hook hook;
     static int elementCounter = 0;
+    static int idToUpdate = 0;
+
 
     public SharedGlue() {
     }
@@ -47,7 +49,7 @@ public class SharedGlue{
     @Given("I am on the {string} update page")
     public void iAmOnTheUpdatePage(String string) {
         String pageName = string.toLowerCase(Locale.ROOT) + "s";
-        String url = String.format("http://localhost:8081/%s/update/3", pageName);
+        String url = String.format("http://localhost:8081/%s/update/" + idToUpdate, pageName);
         hook.getDriver().get(url);
         String windowTitle = hook.getDriver().getTitle();
         String correctWindowTitle = string.substring(0, 1).toUpperCase() + string.substring(1) + "s";
@@ -75,6 +77,13 @@ public class SharedGlue{
         WebElement baseTable = hook.getDriver().findElement(By.tagName("table"));
         List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
         WebElement updateButton = rows.get(1).findElement(By.linkText("Update"));
+        try {
+            List<WebElement> cells = rows.get(1).findElements(By.tagName("td"));
+            idToUpdate = Integer.parseInt(cells.get(0).getText());
+        }
+        catch (Exception e) {
+            Assert.fail("The resource cannot be found");
+        }
         updateButton.click();
     }
 
