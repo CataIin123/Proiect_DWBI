@@ -28,10 +28,10 @@ Feature: Client Management
 
   Scenario: I delete a client
     Given I am on the "client" page
-    When I click on the delete button for the first element
+    When I click on the delete button for the "second" element
     Then The "client" list should contain one less element
 
   Scenario: I try to delete an active client
     Given I am on the "client" page
-    When I click on the delete button for the first element
+    When I click on the delete button for the "first" element
     Then I should see an error message

@@ -133,13 +133,4 @@ public class ClientGlue {
         }
         Assert.fail("The resource cannot be found");
     }
-
-    @Then("I should see an error message")
-    public void iShouldSeeAnErrorMessage() {
-        try {
-            WebElement errorMessage = hook.getDriver().findElement(By.className("error-message"));
-            Assert.assertEquals("The client cannot be deleted because he booked a ride", errorMessage.getText());
-        } catch (Exception e) {
-        }
-    }
 }

@@ -8,11 +8,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.util.*;
 
 
-public class SharedGlue{
-    private  Hook hook;
+public class SharedGlue {
+    private Hook hook;
     static int elementCounter = 0;
     static int idToUpdate = 0;
 
@@ -78,21 +79,24 @@ public class SharedGlue{
         try {
             List<WebElement> cells = rows.get(1).findElements(By.tagName("td"));
             idToUpdate = Integer.parseInt(cells.get(0).getText());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Assert.fail("The resource cannot be found");
         }
         updateButton.click();
     }
 
-    @When("I click on the delete button for the first element")
-    public void iClickOnTheDeleteButtonForTheFirstElement() {
+    @When("I click on the delete button for the {string} element")
+    public void iClickOnTheDeleteButtonForTheFirstElement(String string) {
+        int id = 1;
+        if (string == "second") {
+            id = 2;
+        }
         WebElement navElement = hook.getDriver().findElement(By.className("panel-footer")).findElement(By.tagName("nav"));
         String navText = navElement.getText();
         elementCounter = new Scanner(navText).useDelimiter("\\D+").nextInt();
         WebElement baseTable = hook.getDriver().findElement(By.tagName("table"));
         List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
-        WebElement deleteButton = rows.get(1).findElement(By.linkText("Delete"));
+        WebElement deleteButton = rows.get(id).findElement(By.linkText("Delete"));
         deleteButton.click();
 
     }
@@ -122,5 +126,9 @@ public class SharedGlue{
         Assert.assertEquals(newElementCounter, elementCounter - 1);
     }
 
-
+    @Then("I should see an error message")
+    public void iShouldSeeAnErrorMessage() {
+        WebElement errorMessage = hook.getDriver().findElement(By.className("error-message"));
+        Assert.assertTrue(errorMessage.getText().contains("cannot be deleted because"));
+    }
 }

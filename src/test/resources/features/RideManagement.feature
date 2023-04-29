@@ -28,7 +28,7 @@ Feature: Ride Management
 
   Scenario: I delete a ride
     Given I am on the "ride" page
-    When I click on the delete button for the first element
+    When I click on the delete button for the "first" element
     Then The "ride" list should contain one less element
 
 
