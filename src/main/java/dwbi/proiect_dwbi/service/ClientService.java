@@ -39,7 +39,7 @@ public class ClientService {
 
     public void save(Client client) {
         Client storedClient = clientRepository.findByClientName(client.getClientName());
-        if(storedClient != null){
+        if (storedClient != null) {
             throw new ResourceAlreadyExistsException("Client " + client.getClientName() + " already exists");
         }
         clientRepository.save(client);
@@ -48,16 +48,15 @@ public class ClientService {
     @Transactional
     public Client update(Client client, int clientId) {
         Client storedClient = clientRepository.findByClientId(clientId);
-        if(storedClient == null){
+        if (storedClient == null) {
             throw new ResourceNotFoundException("Client " + clientId + " not found");
         }
         Client storedClientForName = clientRepository.findByClientName(client.getClientName());
-        if(storedClientForName != null && storedClientForName.getClientId() != clientId){
+        if (storedClientForName != null && storedClientForName.getClientId() != clientId) {
             throw new ResourceAlreadyExistsException("Client " + client.getClientName() + " already exists");
         }
         return clientRepository.save(client);
     }
-
 
     @Transactional
     public void delete(int id) {

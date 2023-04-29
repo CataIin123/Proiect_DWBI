@@ -43,7 +43,6 @@ body{
     color: #fff;
     height: 40px;
 }
-
 .wrapper .main_content{
     width: 100%;
     margin-left: 200px;
@@ -56,32 +55,12 @@ body{
     border-bottom: 1px solid #e0e4e8;
     overflow: hidden;
 }
-.wrapper .main_content .header-login .logging-button{
-    padding: 1px;
-    font-size: 20px;
-    border-radius: 5px;
-    background: #764842;
-    float: right;
-}
-.wrapper .main_content .header-book .new-book-button{
-    padding: 1px;
-    font-size: 20px;
-    border-radius: 5px;
-    background: #764842;
-    float: left;
-}
-.wrapper .main_content .header-student .new-student-button{
-    padding: 1px;
-    font-size: 20px;
-    border-radius: 5px;
-    background: #764842;
-    float: left;
-}
 .wrapper .main_content .save-form{
     flex-direction: column;
 }
-
-
+.wrapper .main_content .error-message{
+    display: none;
+}
 
 
 /*.wrapper .main_content .header div{*/

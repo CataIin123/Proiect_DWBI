@@ -1,14 +1,17 @@
 package dwbi.proiect_dwbi.controller;
 
 import dwbi.proiect_dwbi.model.Client;
-import dwbi.proiect_dwbi.model.Region;
 import dwbi.proiect_dwbi.service.ClientService;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class ClientController {
@@ -20,7 +23,7 @@ public class ClientController {
     }
 
     @GetMapping("/clients")
-    public String getAll(Model model) {
+    public String getAll(Model model, HttpSession session) {
         return getOnePage(model, 1);
     }
 
@@ -61,7 +64,7 @@ public class ClientController {
     }
 
     @PostMapping("/clients/save")
-    public String save(Client client){
+    public String save(Client client) {
         clientService.save(client);
         return "redirect:/clients/1";
     }
@@ -71,6 +74,7 @@ public class ClientController {
         model.addAttribute(clientId);
         return "intermediary_pages/client-update";
     }
+
     @RequestMapping("/clients/saveUpdated/{clientId}")
     public String saveUpdatedClient(Client client, @PathVariable int clientId) {
         clientService.update(client, clientId);
@@ -78,8 +82,19 @@ public class ClientController {
     }
 
     @RequestMapping("/clients/delete/{id}")
-    public String delete(@PathVariable int id) {
-        clientService.delete(id);
-        return "redirect:/clients";
+    public String delete(@PathVariable int id, HttpSession session) {
+        String pattern = "(.*)(SYSTEM.FK_)(\\w+)(_).+";
+        Pattern compiler = Pattern.compile(pattern);
+        try {
+            clientService.delete(id);
+            return "redirect:/clients";
+        } catch (DataAccessException e) {
+            Matcher matcher = compiler.matcher(Objects.requireNonNull(e.getMessage()));
+            if (matcher.find()) {
+                session.setAttribute("errorMessage", "The client cannot be deleted because he booked a "
+                        + matcher.group(3).toLowerCase());
+            }
+            return "redirect:/clients";
+        }
     }
 }

@@ -1,17 +1,22 @@
 package dwbi.proiect_dwbi;
 
 import io.cucumber.java.After;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 public class Hook {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Hook.class);
-
     public WebDriver webDriver;
 
     public WebDriver getDriver() {
@@ -27,8 +32,7 @@ public class Hook {
         }
         System.setProperty("webdriver.chrome.driver", "D:\\chromedriver.exe");
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--start-maximized");
-        chromeOptions.addArguments("window-size=1920,1080");
+        chromeOptions.addArguments("chrome.switches", "--disable-extensions --disable-extensions-file-access-check --disable-extensions-http-throttling --disable-infobars --enable-automation --start-maximized");
         return webDriver = new ChromeDriver(chromeOptions);
     }
 

@@ -8,8 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.*;
+
 
 public class SharedGlue{
     private  Hook hook;
@@ -23,8 +23,6 @@ public class SharedGlue{
     public SharedGlue(Hook hook) {
         this.hook = hook;
     }
-
-
 
     @Given("I am on the {string} page")
     public void iAmOnPage(String string) {
@@ -96,6 +94,7 @@ public class SharedGlue{
         List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
         WebElement deleteButton = rows.get(1).findElement(By.linkText("Delete"));
         deleteButton.click();
+
     }
 
     @Then("I should see a list with all the {string}")
