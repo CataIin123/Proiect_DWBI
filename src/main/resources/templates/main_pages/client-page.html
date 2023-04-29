@@ -50,7 +50,7 @@
                 Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
                 <ul class="pagination">
                     <li class="page-item">
-                        <a  th:if="${currentPage > 1}" th:href="@{'/clients/1'}">First</a>
+                        <a th:if="${currentPage > 1}" th:href="@{'/clients/1'}">First</a>
                         <span th:unless="${currentPage > 1}">First</span>
                     </li>
                     &nbsp;
@@ -76,10 +76,20 @@
                     </li>
                 </ul>
             </nav>
-
+            <div style="background: aqua" id="error-message" class="error-message"
+                 th:text="${session.errorMessage}"></div>
+            <script  id="error-script">
+                let errorMessageElement = document.getElementById('error-message');
+                errorMessageElement.style.display = 'block';
+                setTimeout(function () {
+                    let errorMessageElement = document.getElementById('error-message');
+                    errorMessageElement.style.display = 'none';
+                    sessionStorage.removeItem('displayErrorMessage');
+                    sessionStorage.removeItem('errorMessage');
+                }, 5000);
+            </script>
         </footer>
     </div>
-
 </div>
 </body>
 </html>
