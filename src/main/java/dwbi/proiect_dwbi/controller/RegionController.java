@@ -2,11 +2,13 @@ package dwbi.proiect_dwbi.controller;
 
 import dwbi.proiect_dwbi.model.Region;
 import dwbi.proiect_dwbi.service.RegionService;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -78,8 +80,13 @@ public class RegionController {
     }
 
     @RequestMapping("/regions/delete/{id}")
-    public String delete(@PathVariable int id) {
-        regionService.delete(id);
-        return "redirect:/regions";
+    public String delete(@PathVariable int id, HttpSession session) {
+        try {
+            regionService.delete(id);
+            return "redirect:/regions";
+        } catch (DataAccessException e) {
+            session.setAttribute("errorMessage", "The region cannot be deleted because it's linked to a district.");
+            return "redirect:/regions";
+        }
     }
 }
