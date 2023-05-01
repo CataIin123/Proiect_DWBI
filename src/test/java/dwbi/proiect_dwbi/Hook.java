@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -33,7 +34,9 @@ public class Hook {
         System.setProperty("webdriver.chrome.driver", "D:\\chromedriver.exe");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("chrome.switches", "--disable-extensions --disable-extensions-file-access-check --disable-extensions-http-throttling --disable-infobars --enable-automation --start-maximized");
-        return webDriver = new ChromeDriver(chromeOptions);
+        webDriver = new ChromeDriver(chromeOptions);
+        webDriver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+        return webDriver;
     }
 
     public void closeDriver() {

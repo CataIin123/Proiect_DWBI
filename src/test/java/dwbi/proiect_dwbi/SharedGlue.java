@@ -85,20 +85,50 @@ public class SharedGlue {
         updateButton.click();
     }
 
+    @When("I click on the update button for the last element")
+    public void iClickOnTheUpdateButtonForTheLast() {
+        try {
+            WebElement lastPageElement = hook.getDriver().findElement(By.linkText("Last"));
+            if (lastPageElement.isEnabled()) {
+                lastPageElement.click();
+            }
+        } catch (Exception ignored) {}
+        WebElement baseTable = hook.getDriver().findElement(By.tagName("table"));
+        List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
+        WebElement lastRow = rows.get(rows.size() - 1);
+        WebElement updateButton = lastRow.findElement(By.linkText("Update"));
+        updateButton.click();
+    }
+
+
     @When("I click on the delete button for the {string} element")
-    public void iClickOnTheDeleteButtonForTheFirstElement(String string) {
-        int id = 1;
-        if (string == "second") {
-            id = 2;
-        }
+    public void iClickOnTheDeleteButtonForTheElement(String string) {
         WebElement navElement = hook.getDriver().findElement(By.className("panel-footer")).findElement(By.tagName("nav"));
         String navText = navElement.getText();
         elementCounter = new Scanner(navText).useDelimiter("\\D+").nextInt();
-        WebElement baseTable = hook.getDriver().findElement(By.tagName("table"));
-        List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
-        WebElement deleteButton = rows.get(id).findElement(By.linkText("Delete"));
-        deleteButton.click();
 
+        if (Objects.equals(string, "last")) {
+            try {
+                WebElement lastPageElement = hook.getDriver().findElement(By.linkText("Last"));
+                if (lastPageElement.isEnabled()) {
+                    lastPageElement.click();
+                }
+            } catch (Exception ignored) {}
+            WebElement baseTable = hook.getDriver().findElement(By.tagName("table"));
+            List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
+            WebElement lastRow = rows.get(rows.size() - 1);
+            WebElement updateButton = lastRow.findElement(By.linkText("Delete"));
+            updateButton.click();
+        } else {
+            int id = 1;
+            if (Objects.equals(string, "second")) {
+                id = 2;
+            }
+            WebElement baseTable = hook.getDriver().findElement(By.tagName("table"));
+            List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
+            WebElement deleteButton = rows.get(id).findElement(By.linkText("Delete"));
+            deleteButton.click();
+        }
     }
 
     @Then("I should see a list with all the {string}")

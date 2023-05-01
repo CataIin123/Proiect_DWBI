@@ -4,11 +4,13 @@ package dwbi.proiect_dwbi.controller;
 import dwbi.proiect_dwbi.model.District;
 import dwbi.proiect_dwbi.model.Invoice;
 import dwbi.proiect_dwbi.service.DistrictService;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -80,8 +82,13 @@ public class DistrictController {
 
 
     @RequestMapping("/districts/delete/{id}")
-    public String delete(@PathVariable int id) {
-        districtService.delete(id);
-        return "redirect:/districts";
+    public String delete(@PathVariable int id, HttpSession session) {
+        try {
+            districtService.delete(id);
+            return "redirect:/districts";
+        } catch (DataAccessException e) {
+            session.setAttribute("errorMessage", "The district cannot be deleted because it's linked to a town.");
+            return "redirect:/districts";
+        }
     }
 }
