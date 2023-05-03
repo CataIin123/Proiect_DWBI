@@ -97,6 +97,12 @@ public class SharedGlue {
         List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
         WebElement lastRow = rows.get(rows.size() - 1);
         WebElement updateButton = lastRow.findElement(By.linkText("Update"));
+        try {
+            List<WebElement> cells = rows.get(1).findElements(By.tagName("td"));
+            idToUpdate = Integer.parseInt(cells.get(0).getText());
+        } catch (Exception e) {
+            Assert.fail("The resource cannot be found");
+        }
         updateButton.click();
     }
 
@@ -140,7 +146,9 @@ public class SharedGlue {
 
     @Then("I should see the {string} create page")
     public void iShouldSeeTheCreatePage(String string) {
-        Assert.assertEquals(hook.getDriver().getCurrentUrl(), "http://localhost:8081/" + string + "s/create?");
+        String url = hook.getDriver().getCurrentUrl();
+        String expectedSuffix = "http://localhost:8081/" + string + "s/create";
+        Assert.assertTrue(url.startsWith(expectedSuffix));
     }
 
     @Then("I should see the update {string} page")

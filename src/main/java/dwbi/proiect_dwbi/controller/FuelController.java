@@ -77,7 +77,6 @@ public class FuelController {
         return "redirect:/fuels";
     }
 
-
     @RequestMapping("/fuels/delete/{id}")
     public String delete(@PathVariable int id) {
         fuelService.delete(id);

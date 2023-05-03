@@ -93,6 +93,7 @@ public class ClientController {
             if (matcher.find()) {
                 session.setAttribute("errorMessage", "The client cannot be deleted because he booked a "
                         + matcher.group(3).toLowerCase());
+                session.setAttribute("errorMessageDisplay", true);
             }
             return "redirect:/clients";
         }

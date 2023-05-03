@@ -2,11 +2,13 @@ package dwbi.proiect_dwbi.controller;
 
 import dwbi.proiect_dwbi.model.Car;
 import dwbi.proiect_dwbi.service.CarService;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -77,8 +79,13 @@ public class CarController {
     }
 
     @RequestMapping("/cars/delete/{id}")
-    public String delete(@PathVariable int id) {
-        carService.delete(id);
-        return "redirect:/cars";
+    public String delete(@PathVariable int id, HttpSession session) {
+        try {
+            carService.delete(id);
+            return "redirect:/cars";
+        } catch (DataAccessException e) {
+            session.setAttribute("errorMessage", "The car cannot be deleted because it's linked to a driver.");
+            return "redirect:/cars";
+        }
     }
 }

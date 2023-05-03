@@ -72,7 +72,18 @@
                     </li>
                 </ul>
             </nav>
-
+            <div style="background: aqua" id="error-message" class="error-message"
+                 th:text="${session.errorMessage}"></div>
+            <script  id="error-script">
+                let errorMessageElement = document.getElementById('error-message');
+                errorMessageElement.style.display = 'block';
+                setTimeout(function () {
+                    let errorMessageElement = document.getElementById('error-message');
+                    errorMessageElement.style.display = 'none';
+                    sessionStorage.removeItem('displayErrorMessage');
+                    sessionStorage.removeItem('errorMessage');
+                }, 5000);
+            </script>
         </footer>
     </div>
 

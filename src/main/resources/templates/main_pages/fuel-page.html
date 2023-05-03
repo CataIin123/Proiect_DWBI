@@ -34,6 +34,7 @@
                     <td th:text="${fuel.getFuelId()}"></td>
                     <td th:text="${fuel.getCar().getCarNumber()}"></td>
                     <td th:text="${fuel.getResupplyDate()}"></td>
+                    <td th:text="${fuel.getQuantity()}"></td>
                     <td th:text="${fuel.getUnitPrice()}"></td>
                     <td><a href="#" th:href="@{'/fuels/update/' + ${fuel.getFuelId()}}">Update</a></td>
                     <td><a href="#" th:href="@{'/fuels/delete/' + ${fuel.getFuelId()}}">Delete</a></td>

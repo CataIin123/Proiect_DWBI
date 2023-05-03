@@ -1,3 +1,4 @@
+@ci
 Feature: Client Management
   Scenario: View the list of all clients
     Given I am on the "client" page

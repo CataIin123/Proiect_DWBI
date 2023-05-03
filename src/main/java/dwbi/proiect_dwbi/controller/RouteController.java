@@ -3,11 +3,13 @@ package dwbi.proiect_dwbi.controller;
 import dwbi.proiect_dwbi.model.Fuel;
 import dwbi.proiect_dwbi.model.Route;
 import dwbi.proiect_dwbi.service.RouteService;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -80,9 +82,14 @@ public class RouteController {
     }
 
 
-    @RequestMapping("/routes/delete/{id}")
-    public String delete(@PathVariable int id) {
-        routeService.delete(id);
-        return "redirect:/routes";
+    @RequestMapping("/routes/delete/{routeId}")
+    public String delete(@PathVariable int routeId, HttpSession session) {
+        try {
+            routeService.delete(routeId);
+            return "redirect:/routes";
+        } catch (DataAccessException e) {
+            session.setAttribute("errorMessage", "The route cannot be deleted because it's linked to a ride.");
+            return "redirect:/routes";
+        }
     }
 }

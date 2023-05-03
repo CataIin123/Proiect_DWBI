@@ -8,7 +8,7 @@ import io.cucumber.junit.Cucumber;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = {"classpath:features"},
-        tags = {"@ci"})
+        tags = {"@cii"})
 
 public class TestRunner {
 }

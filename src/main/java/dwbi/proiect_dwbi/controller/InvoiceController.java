@@ -2,11 +2,13 @@ package dwbi.proiect_dwbi.controller;
 
 import dwbi.proiect_dwbi.model.Invoice;
 import dwbi.proiect_dwbi.service.InvoiceService;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -79,8 +81,13 @@ public class InvoiceController {
 
 
     @RequestMapping("/invoices/delete/{id}")
-    public String delete(@PathVariable int id) {
-        invoiceService.delete(id);
-        return "redirect:/invoices";
+    public String delete(@PathVariable int id, HttpSession session) {
+        try {
+            invoiceService.delete(id);
+            return "redirect:/invoices";
+        } catch (DataAccessException e) {
+            session.setAttribute("errorMessage", "The invoice cannot be deleted because it's linked to a ride.");
+            return "redirect:/invoices";
+        }
     }
 }
